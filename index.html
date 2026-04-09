@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beckmans Hero Slideshow</title>
+  <style>
+    :root {
+      --bg: #efefef;
+      --ink: #231f20;
+      --card-radius: 6px;
+      --pill-bg: #000;
+      --pill-text: #fff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Futura PT", "Avenir Next", "Avenir", "Helvetica Neue", Arial, sans-serif;
+    }
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 16px;
+      min-height: 100vh;
+    }
+    .nav {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto auto auto auto;
+      align-items: center;
+      gap: 24px;
+      font-size: 16px;
+      text-transform: lowercase;
+    }
+    .nav .brand {
+      text-transform: none;
+      font-weight: 600;
+    }
+    .hero {
+      margin-top: 120px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .hero-col { min-width: 0; }
+    .pagination {
+      height: 10px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin: 0 0 10px 0;
+      padding-left: 2px;
+    }
+    .dot {
+      width: 10px;
+      height: 8px;
+      border: 1px solid #000;
+      border-radius: 999px;
+      opacity: 0.9;
+      background: transparent;
+    }
+    .dot.active {
+      width: 50px;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+    }
+    .dot .fill {
+      position: absolute;
+      top: 50%;
+      left: 3px;
+      width: calc(100% - 6px);
+      height: 2px;
+      transform-origin: left center;
+      transform: scaleX(0);
+      background: #000;
+      translate: 0 -50%;
+      border-radius: 999px;
+    }
+    .card {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      background: #d7d7d7;
+    }
+    .image-layer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .image-layer.front { inset: 22px; border-radius: 3px; }
+    .slot {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 520ms ease;
+      will-change: opacity;
+    }
+    .slot.is-visible { opacity: 1; }
+    .caption {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      background: rgba(0, 0, 0, 0.78);
+      color: var(--pill-text);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-family: "Geist Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      text-transform: uppercase;
+      line-height: 1.3;
+      letter-spacing: 0.08em;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      font-size: 12px;
+    }
+    .caption .student { display: block; }
+    .caption .meta { display: block; white-space: nowrap; }
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; margin-top: 48px; }
+      .nav { grid-template-columns: 1fr auto; row-gap: 10px; }
+      .nav span:nth-child(n + 3):nth-child(-n + 7) { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="nav">
+      <span class="brand">beckmans designhögskola</span>
+      <span>form</span>
+      <span>mode</span>
+      <span>visuell kommunikation</span>
+      <span>kvällskolan</span>
+      <span>ansök</span>
+      <span>⌕</span>
+    </header>
+
+    <section class="hero">
+      <article class="hero-col" id="col-form">
+        <div class="pagination"></div>
+        <div class="card">
+          <div class="image-layer back">
+            <img class="slot slot-a is-visible" alt="">
+            <img class="slot slot-b" alt="">
+          </div>
+          <div class="image-layer front">
+            <img class="slot slot-a is-visible" alt="">
+            <img class="slot slot-b" alt="">
+          </div>
+          <div class="caption">
+            <span class="student"></span>
+            <span class="meta"></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="hero-col" id="col-mode">
+        <div class="pagination"></div>
+        <div class="card">
+          <div class="image-layer back">
+            <img class="slot slot-a is-visible" alt="">
+            <img class="slot slot-b" alt="">
+          </div>
+          <div class="image-layer front">
+            <img class="slot slot-a is-visible" alt="">
+            <img class="slot slot-b" alt="">
+          </div>
+          <div class="caption">
+            <span class="student"></span>
+            <span class="meta"></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="hero-col" id="col-vk">
+        <div class="pagination"></div>
+        <div class="card">
+          <div class="image-layer back">
+            <img class="slot slot-a is-visible" alt="">
+            <img class="slot slot-b" alt="">
+          </div>
+          <div class="image-layer front">
+            <img class="slot slot-a is-visible" alt="">
+            <img class="slot slot-b" alt="">
+          </div>
+          <div class="caption">
+            <span class="student"></span>
+            <span class="meta"></span>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const SLIDE_MS = 3800;
+    const FRONT_DELAY_MS = 240;
+    const PAGINATION_STEPS = 5;
+
+    const cardData = {
+      form: {
+        program: "FORM 180HP",
+        students: [
+          {
+            name: "Mikael Westman",
+            work: "Vattenlilja",
+            backImage: "https://beckmans.se/wp-content/uploads/2025/10/501A9043-2-Edit-1-1200x1500.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/02/stool-mikael.westman-02-1500x844.jpg"
+          },
+          {
+            name: "Erik Marklund",
+            work: "Spännband",
+            backImage: "https://beckmans.se/wp-content/uploads/2025/06/Erik-Marklund-Beckmans-Designhogskola-4-1500x1200.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/02/Pula_Erik_Marklund_Beckmans_2-1200x1500.jpg"
+          }
+        ]
+      },
+      mode: {
+        program: "MODE 180HP",
+        students: [
+          {
+            name: "Asli Cömert",
+            work: "A Call To Prayer",
+            backImage: "https://beckmans.se/wp-content/uploads/2021/01/hqdefault-1.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2021/01/BILDNOBEL1_1-1000x1500.jpg"
+          },
+          {
+            name: "Nadja Olsson",
+            work: "Vestige – Accessories 2025",
+            backImage: "https://beckmans.se/wp-content/uploads/2025/12/VESTIGE2MB.1-1000x1500.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/12/BECKMANS_2024112588817-1057x1500.jpg"
+          }
+        ]
+      },
+      vk: {
+        program: "VISUELL KOMMUNIKATION 180HP",
+        students: [
+          {
+            name: "Olle Ljung",
+            work: "What Happens In The Arctic",
+            backImage: "https://beckmans.se/wp-content/uploads/2025/12/491418745_18385417684138754_597021362675519425_n.jpeg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/12/Chronically-Online-1500x1000.jpg"
+          },
+          {
+            name: "Adam Arinbjarnarson",
+            work: "Material Imperfections",
+            backImage: "https://beckmans.se/wp-content/uploads/2025/05/adam_arinbjarnarson_2025_HR.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2024/03/material-1-1071x1500.jpg"
+          }
+        ]
+      }
+    };
+
+    class HeroCard {
+      constructor(root, data, cycleOffset = 0) {
+        this.root = root;
+        this.data = data;
+        this.index = 0;
+        this.slotName = "a";
+        this.tick = 0;
+        this.lastNow = performance.now();
+        this.cycleStart = this.lastNow - cycleOffset * SLIDE_MS;
+
+        this.backA = root.querySelector(".image-layer.back .slot-a");
+        this.backB = root.querySelector(".image-layer.back .slot-b");
+        this.frontA = root.querySelector(".image-layer.front .slot-a");
+        this.frontB = root.querySelector(".image-layer.front .slot-b");
+        this.studentEl = root.querySelector(".student");
+        this.metaEl = root.querySelector(".meta");
+
+        this.paginationRoot = root.querySelector(".pagination");
+        this.progressFill = null;
+        this.currentStep = 0;
+        this.setupPagination();
+        this.applyInitial();
+      }
+
+      setupPagination() {
+        this.paginationRoot.innerHTML = "";
+        this.dots = [];
+        for (let i = 0; i < PAGINATION_STEPS; i += 1) {
+          const dot = document.createElement("span");
+          dot.className = "dot";
+          const fill = document.createElement("span");
+          fill.className = "fill";
+          dot.appendChild(fill);
+          this.paginationRoot.appendChild(dot);
+          this.dots.push(dot);
+        }
+        this.activateStep(0);
+      }
+
+      activateStep(step) {
+        this.currentStep = step % PAGINATION_STEPS;
+        this.dots.forEach((dot, i) => {
+          dot.classList.toggle("active", i === this.currentStep);
+          const fill = dot.querySelector(".fill");
+          fill.style.transform = "scaleX(0)";
+        });
+        this.progressFill = this.dots[this.currentStep].querySelector(".fill");
+      }
+
+      setProgress(progress) {
+        if (!this.progressFill) return;
+        this.progressFill.style.transform = `scaleX(${Math.max(0, Math.min(progress, 1))})`;
+      }
+
+      applyInitial() {
+        const first = this.data.students[this.index];
+        this.backA.src = first.backImage;
+        this.frontA.src = first.frontImage;
+        this.backA.alt = `${first.name} ${this.data.program.toLowerCase()} bakgrund`;
+        this.frontA.alt = `${first.name} ${this.data.program.toLowerCase()} förgrund`;
+        this.studentEl.textContent = first.name.toUpperCase();
+        this.metaEl.textContent = `${first.work.toUpperCase()} · ${this.data.program} →`;
+      }
+
+      next() {
+        this.index = (this.index + 1) % this.data.students.length;
+        const nextData = this.data.students[this.index];
+        const showA = this.slotName !== "a";
+        const nextBack = showA ? this.backA : this.backB;
+        const nextFront = showA ? this.frontA : this.frontB;
+        const prevBack = showA ? this.backB : this.backA;
+        const prevFront = showA ? this.frontB : this.frontA;
+
+        nextBack.src = nextData.backImage;
+        nextBack.alt = `${nextData.name} ${this.data.program.toLowerCase()} bakgrund`;
+        nextFront.src = nextData.frontImage;
+        nextFront.alt = `${nextData.name} ${this.data.program.toLowerCase()} förgrund`;
+
+        nextBack.classList.add("is-visible");
+        prevBack.classList.remove("is-visible");
+
+        window.setTimeout(() => {
+          nextFront.classList.add("is-visible");
+          prevFront.classList.remove("is-visible");
+          this.studentEl.textContent = nextData.name.toUpperCase();
+          this.metaEl.textContent = `${nextData.work.toUpperCase()} · ${this.data.program} →`;
+        }, FRONT_DELAY_MS);
+
+        this.slotName = showA ? "a" : "b";
+        this.tick += 1;
+        this.activateStep(this.tick % PAGINATION_STEPS);
+        this.cycleStart = performance.now();
+        this.setProgress(0);
+      }
+
+      frame(now) {
+        const elapsed = now - this.cycleStart;
+        const progress = elapsed / SLIDE_MS;
+        this.setProgress(progress);
+        if (elapsed >= SLIDE_MS) {
+          this.next();
+        }
+      }
+    }
+
+    const cards = [
+      new HeroCard(document.querySelector("#col-form"), cardData.form, 0.34),
+      new HeroCard(document.querySelector("#col-mode"), cardData.mode, 0.62),
+      new HeroCard(document.querySelector("#col-vk"), cardData.vk, 0.21)
+    ];
+
+    function animate(now) {
+      cards.forEach((card) => card.frame(now));
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
