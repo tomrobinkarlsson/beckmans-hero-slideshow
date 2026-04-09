@@ -396,6 +396,11 @@
         program: "FORM 180HP",
         students: [
           {
+            name: "Mikael Westman",
+            backImage: "https://beckmans.se/wp-content/uploads/2025/10/501A9043-2-Edit-1-1200x1500.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/02/stool-mikael.westman-02-1500x844.jpg"
+          },
+          {
             name: "Erik Marklund",
             backImage: "https://beckmans.se/wp-content/uploads/2025/06/Erik-Marklund-Beckmans-Designhogskola-4-1500x1200.jpg",
             frontImage: "https://beckmans.se/wp-content/uploads/2025/02/Pula_Erik_Marklund_Beckmans_2-1200x1500.jpg"
@@ -414,11 +419,6 @@
             name: "Rebecca Wiik",
             backImage: "https://beckmans.se/wp-content/uploads/2022/11/Beckmans_OVIS-2-1002x1500.png",
             frontImage: "https://beckmans.se/wp-content/uploads/2022/11/Ska%CC%88rmavbild-2022-11-20-kl.-16.28.29-1117x1500.png"
-          },
-          {
-            name: "Julia Bianco Sommer",
-            backImage: "https://beckmans.se/wp-content/uploads/2025/04/HINTER_0325_02_copy-1000x1500.jpg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2025/03/Raet-1-1-1061x1500.jpg"
           }
         ]
       },
@@ -484,15 +484,6 @@
       }
     };
 
-    function shuffledIndices(length) {
-      const arr = Array.from({ length }, (_, i) => i);
-      for (let i = arr.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
     function randomDuration() {
       return SLIDE_MS_MIN + Math.random() * (SLIDE_MS_MAX - SLIDE_MS_MIN);
     }
@@ -501,12 +492,8 @@
       constructor(root, data, options = {}) {
         this.root = root;
         this.data = data;
-        this.studentOrder = shuffledIndices(this.data.students.length);
-        this.studentOrderPos = 0;
-        this.studentIndex = this.studentOrder[this.studentOrderPos];
-        this.stepOrder = shuffledIndices(PAGINATION_COUNT);
-        this.stepOrderPos = 0;
-        this.step = this.stepOrder[this.stepOrderPos];
+        this.studentIndex = options.startStudent ?? 0;
+        this.step = options.startStep ?? 0;
         this.visibleSlot = "a";
         this.currentSlideDuration = randomDuration();
         const startProgress = options.startProgress ?? Math.random();
@@ -561,26 +548,8 @@
         this.programEl.textContent = this.data.program;
       }
 
-      nextStudentIndex() {
-        this.studentOrderPos += 1;
-        if (this.studentOrderPos >= this.studentOrder.length) {
-          this.studentOrder = shuffledIndices(this.data.students.length);
-          this.studentOrderPos = 0;
-        }
-        return this.studentOrder[this.studentOrderPos];
-      }
-
-      nextPaginationStep() {
-        this.stepOrderPos += 1;
-        if (this.stepOrderPos >= this.stepOrder.length) {
-          this.stepOrder = shuffledIndices(PAGINATION_COUNT);
-          this.stepOrderPos = 0;
-        }
-        return this.stepOrder[this.stepOrderPos];
-      }
-
       nextSlide() {
-        this.studentIndex = this.nextStudentIndex();
+        this.studentIndex = (this.studentIndex + 1) % this.data.students.length;
         const next = this.data.students[this.studentIndex];
         const showA = this.visibleSlot !== "a";
         const nextBack = showA ? this.backA : this.backB;
@@ -600,7 +569,7 @@
         }, FRONT_DELAY_MS);
 
         this.visibleSlot = showA ? "a" : "b";
-        this.step = this.nextPaginationStep();
+        this.step = (this.step + 1) % PAGINATION_COUNT;
         this.renderPagination();
         this.cycleStart = performance.now();
         this.currentSlideDuration = randomDuration();
