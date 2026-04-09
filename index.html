@@ -15,156 +15,98 @@
       font-display: swap;
     }
 
-    :root {
-      --bg: #f0f0f0;
-      --ink: #231f20;
-      --edge: 16px;
-      --card-h-max: min(612px, calc(100vh - 188px));
-      --card-w-max: calc(var(--card-h-max) * 0.75);
-      --card-w: min(var(--card-w-max), calc((100vw - (var(--edge) * 2) - 32px) / 3));
-      --card-h: calc(var(--card-w) / 0.75);
-    }
-
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      background: var(--bg);
-      color: var(--ink);
+      background: #fff;
+      color: #231f20;
       font-family: "FuturaEFOP-DemiBold", "Avenir Next", "Avenir", "Helvetica Neue", Arial, sans-serif;
-      min-height: 100vh;
+      min-height: 100dvh;
     }
 
     .page {
-      width: min(1440px, 100vw);
+      width: min(100vw, 1440px);
+      height: 100dvh;
       margin: 0 auto;
-      padding: var(--edge);
-      min-height: 100vh;
       position: relative;
       overflow: hidden;
+      background: #fff;
     }
 
     .nav {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 18px;
+      align-items: flex-start;
+      gap: 12px;
       font-size: 16px;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.32px;
       text-transform: lowercase;
-      line-height: 1;
+      line-height: normal;
       user-select: none;
+      z-index: 3;
     }
 
-    .nav .brand {
+    .nav > span {
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .brand {
       text-transform: none;
-      margin-right: auto;
+      line-height: 0.96;
       letter-spacing: 0;
     }
 
-    .nav .spacer {
-      width: 44px;
-      flex: 0 0 44px;
+    .search {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
     }
 
     .hero {
       position: absolute;
-      left: var(--edge);
-      right: var(--edge);
-      bottom: var(--edge);
+      left: 0;
+      right: 0;
+      top: 114px;
+      bottom: 0;
       display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
+      align-items: stretch;
+      z-index: 1;
     }
 
     .hero-col {
-      width: var(--card-w);
+      position: relative;
+      flex: 1 1 33.333%;
       min-width: 0;
     }
 
-    .pagination {
-      height: 10px;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin: 0 0 14px 0;
-      padding-left: 1px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 8px;
-      border: 1px solid #000;
-      border-radius: 999px;
-      background: transparent;
-      position: relative;
-    }
-
-    .dot.active {
-      width: 50px;
-    }
-
-    .dot .track,
-    .dot .fill {
-      position: absolute;
-      top: 50%;
-      left: 3px;
-      width: calc(100% - 6px);
-      height: 2px;
-      translate: 0 -50%;
-      border-radius: 999px;
-      transform-origin: center center;
-      opacity: 0;
-    }
-
-    .dot .track {
-      background: #000;
-      transform: scaleX(0.12);
-    }
-
-    .dot .fill {
-      background: #000;
-      transform: scaleX(0);
-      background: #000;
-    }
-
-    .dot.active .track,
-    .dot.active .fill {
-      opacity: 1;
-    }
-
     .card {
-      position: relative;
-      width: var(--card-w);
-      height: var(--card-h);
-      border-radius: 4px;
+      position: absolute;
+      inset: 0;
       overflow: hidden;
       background: #dbdbdb;
     }
 
-    .image-layer {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      border-radius: 4px;
-    }
-
-    .image-layer.front {
-      inset: 29px 27px;
-      border-radius: 2px;
-    }
-
+    .image-layer,
     .slot {
       position: absolute;
       inset: 0;
+    }
+
+    .slot {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
       opacity: 0;
-      transition: opacity 520ms ease;
+      transition: opacity 540ms ease;
       will-change: opacity;
     }
 
@@ -172,63 +114,159 @@
       opacity: 1;
     }
 
-    .caption {
+    .image-layer.front {
+      inset: 4.375% 5.625%;
+      overflow: hidden;
+    }
+
+    .overlay {
       position: absolute;
-      left: 10px;
-      bottom: 10px;
+      left: 0;
+      bottom: 16px;
       display: flex;
       flex-direction: column;
       gap: 1px;
+      align-items: flex-start;
       font-family: "Geist Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-      text-transform: uppercase;
-      line-height: 1;
-      letter-spacing: 0.08em;
+      text-transform: uppercase !important;
+      letter-spacing: 1.04px;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      font-size: 12px;
+      font-size: 13px;
       color: #fff;
+      z-index: 2;
     }
 
-    .caption-line {
+    .label-row {
       display: inline-flex;
       align-items: center;
-      width: max-content;
       min-height: 24px;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.98);
-      padding: 0 10px;
-      white-space: nowrap;
+      width: max-content;
     }
 
-    .caption-line.program::after {
-      content: "→";
-      margin-left: 8px;
+    .cap-left {
+      width: 16px;
+      height: 24px;
+      background: #000;
+      flex: 0 0 16px;
+    }
+
+    .cap-middle {
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      background: #000;
+      padding: 0 8px 0 0;
+      white-space: nowrap;
+      line-height: normal;
+      font-weight: 500;
+      font-feature-settings: "ss09" 1, "ss08" 1;
+    }
+
+    .program-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .program-text::after {
+      content: "➔";
       font-size: 12px;
-      line-height: 1;
+      letter-spacing: 0;
+      transform: translateY(-1px);
+    }
+
+    .cap-right {
+      width: 15px;
+      height: 24px;
+      flex: 0 0 15px;
+      background: #000;
+      border-top-right-radius: 999px;
+      border-bottom-right-radius: 999px;
+    }
+
+    .label-sep {
+      width: 16px;
+      height: 1px;
+      background: #000;
+      display: block;
+    }
+
+    .pager-middle {
+      padding-right: 8px;
+    }
+
+    .mini-pagination {
+      height: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .mini-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.3);
+      flex: 0 0 4px;
+    }
+
+    .mini-bar {
+      position: relative;
+      width: 24px;
+      height: 4px;
+      flex: 0 0 24px;
+    }
+
+    .mini-bar-bg,
+    .mini-bar-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .mini-bar-bg {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .mini-bar-fill {
+      background: #fff;
+      transform-origin: left center;
+      transform: scaleX(0);
     }
 
     @media (max-width: 1100px) {
+      .nav {
+        font-size: 14px;
+      }
+      .hero {
+        top: 96px;
+      }
+      .overlay {
+        zoom: 0.92;
+      }
+    }
+
+    @media (max-width: 920px) {
       .nav span:nth-child(5),
       .nav span:nth-child(6) {
         display: none;
       }
-      :root {
-        --card-w: min(420px, calc(100vw - (var(--edge) * 2)));
-        --card-h: calc(var(--card-w) / 0.75);
-      }
-      .page {
-        overflow-y: auto;
-      }
       .hero {
-        position: static;
-        margin-top: 48px;
-        flex-direction: column;
-        align-items: center;
-        gap: 24px;
-        padding-bottom: var(--edge);
+        position: relative;
+        top: 88px;
+        display: grid;
+        grid-template-columns: 1fr;
       }
       .hero-col {
-        width: var(--card-w);
+        min-height: 62vh;
+      }
+      .page {
+        height: auto;
+        min-height: 100dvh;
       }
     }
   </style>
@@ -242,61 +280,105 @@
       <span>visuell kommunikation</span>
       <span>kvällskolan</span>
       <span>ansök</span>
-      <span>⌕</span>
-      <span class="spacer" aria-hidden="true"></span>
+      <svg class="search" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="6.8" cy="6.8" r="4.7" stroke="#231F20" stroke-width="1.2" />
+        <path d="M10.25 10.25L13.9 13.9" stroke="#231F20" stroke-width="1.2" stroke-linecap="round" />
+      </svg>
     </header>
 
     <section class="hero">
       <article class="hero-col" id="col-form">
-        <div class="pagination"></div>
         <div class="card">
           <div class="image-layer back">
-            <img class="slot slot-a is-visible" alt="">
-            <img class="slot slot-b" alt="">
+            <img class="slot slot-a is-visible" alt="" />
+            <img class="slot slot-b" alt="" />
           </div>
           <div class="image-layer front">
-            <img class="slot slot-a is-visible" alt="">
-            <img class="slot slot-b" alt="">
+            <img class="slot slot-a is-visible" alt="" />
+            <img class="slot slot-b" alt="" />
           </div>
-          <div class="caption">
-            <span class="caption-line student"></span>
-            <span class="caption-line program"></span>
+          <div class="overlay">
+            <div class="label-row">
+              <span class="cap-left"></span>
+              <span class="cap-middle student"></span>
+              <span class="cap-right"></span>
+            </div>
+            <span class="label-sep"></span>
+            <div class="label-row">
+              <span class="cap-left"></span>
+              <span class="cap-middle program-text program"></span>
+              <span class="cap-right"></span>
+            </div>
+            <span class="label-sep"></span>
+            <div class="label-row">
+              <span class="cap-left"></span>
+              <span class="cap-middle pager-middle"><span class="mini-pagination"></span></span>
+              <span class="cap-right"></span>
+            </div>
           </div>
         </div>
       </article>
 
       <article class="hero-col" id="col-mode">
-        <div class="pagination"></div>
         <div class="card">
           <div class="image-layer back">
-            <img class="slot slot-a is-visible" alt="">
-            <img class="slot slot-b" alt="">
+            <img class="slot slot-a is-visible" alt="" />
+            <img class="slot slot-b" alt="" />
           </div>
           <div class="image-layer front">
-            <img class="slot slot-a is-visible" alt="">
-            <img class="slot slot-b" alt="">
+            <img class="slot slot-a is-visible" alt="" />
+            <img class="slot slot-b" alt="" />
           </div>
-          <div class="caption">
-            <span class="caption-line student"></span>
-            <span class="caption-line program"></span>
+          <div class="overlay">
+            <div class="label-row">
+              <span class="cap-left"></span>
+              <span class="cap-middle student"></span>
+              <span class="cap-right"></span>
+            </div>
+            <span class="label-sep"></span>
+            <div class="label-row">
+              <span class="cap-left"></span>
+              <span class="cap-middle program-text program"></span>
+              <span class="cap-right"></span>
+            </div>
+            <span class="label-sep"></span>
+            <div class="label-row">
+              <span class="cap-left"></span>
+              <span class="cap-middle pager-middle"><span class="mini-pagination"></span></span>
+              <span class="cap-right"></span>
+            </div>
           </div>
         </div>
       </article>
 
       <article class="hero-col" id="col-vk">
-        <div class="pagination"></div>
         <div class="card">
           <div class="image-layer back">
-            <img class="slot slot-a is-visible" alt="">
-            <img class="slot slot-b" alt="">
+            <img class="slot slot-a is-visible" alt="" />
+            <img class="slot slot-b" alt="" />
           </div>
           <div class="image-layer front">
-            <img class="slot slot-a is-visible" alt="">
-            <img class="slot slot-b" alt="">
+            <img class="slot slot-a is-visible" alt="" />
+            <img class="slot slot-b" alt="" />
           </div>
-          <div class="caption">
-            <span class="caption-line student"></span>
-            <span class="caption-line program"></span>
+          <div class="overlay">
+            <div class="label-row">
+              <span class="cap-left"></span>
+              <span class="cap-middle student"></span>
+              <span class="cap-right"></span>
+            </div>
+            <span class="label-sep"></span>
+            <div class="label-row">
+              <span class="cap-left"></span>
+              <span class="cap-middle program-text program"></span>
+              <span class="cap-right"></span>
+            </div>
+            <span class="label-sep"></span>
+            <div class="label-row">
+              <span class="cap-left"></span>
+              <span class="cap-middle pager-middle"><span class="mini-pagination"></span></span>
+              <span class="cap-right"></span>
+            </div>
           </div>
         </div>
       </article>
@@ -305,8 +387,8 @@
 
   <script>
     const SLIDE_MS = 3800;
-    const FRONT_DELAY_MS = 240;
-    const PAGINATION_STEPS = 5;
+    const FRONT_DELAY_MS = 220;
+    const PAGINATION_COUNT = 5;
 
     const cardData = {
       form: {
@@ -356,16 +438,14 @@
       }
     };
 
-    class HeroCard {
+    class CardSlideshow {
       constructor(root, data, options = {}) {
         this.root = root;
         this.data = data;
-        this.index = 0;
-        this.slotName = "a";
-        this.tick = options.startStep ?? 0;
-        this.startProgress = options.startProgress ?? 0;
-        this.lastNow = performance.now();
-        this.cycleStart = this.lastNow - this.startProgress * SLIDE_MS;
+        this.studentIndex = 0;
+        this.step = options.startStep ?? 0;
+        this.visibleSlot = "a";
+        this.cycleStart = performance.now() - (options.startProgress ?? 0) * SLIDE_MS;
 
         this.backA = root.querySelector(".image-layer.back .slot-a");
         this.backB = root.querySelector(".image-layer.back .slot-b");
@@ -373,103 +453,89 @@
         this.frontB = root.querySelector(".image-layer.front .slot-b");
         this.studentEl = root.querySelector(".student");
         this.programEl = root.querySelector(".program");
+        this.paginationEl = root.querySelector(".mini-pagination");
+        this.fillEl = null;
 
-        this.paginationRoot = root.querySelector(".pagination");
-        this.progressFill = null;
-        this.currentStep = 0;
-        this.setupPagination();
+        this.renderPagination();
         this.applyInitial();
-        this.setProgress(this.startProgress);
+        this.setProgress(options.startProgress ?? 0);
       }
 
-      setupPagination() {
-        this.paginationRoot.innerHTML = "";
-        this.dots = [];
-        for (let i = 0; i < PAGINATION_STEPS; i += 1) {
-          const dot = document.createElement("span");
-          dot.className = "dot";
-          const track = document.createElement("span");
-          track.className = "track";
-          const fill = document.createElement("span");
-          fill.className = "fill";
-          dot.appendChild(track);
-          dot.appendChild(fill);
-          this.paginationRoot.appendChild(dot);
-          this.dots.push(dot);
+      renderPagination() {
+        this.paginationEl.innerHTML = "";
+        for (let i = 0; i < PAGINATION_COUNT; i += 1) {
+          if (i === this.step) {
+            const bar = document.createElement("span");
+            bar.className = "mini-bar";
+            const bg = document.createElement("span");
+            bg.className = "mini-bar-bg";
+            const fill = document.createElement("span");
+            fill.className = "mini-bar-fill";
+            bar.append(bg, fill);
+            this.paginationEl.appendChild(bar);
+            this.fillEl = fill;
+          } else {
+            const dot = document.createElement("span");
+            dot.className = "mini-dot";
+            this.paginationEl.appendChild(dot);
+          }
         }
-        this.activateStep(this.tick % PAGINATION_STEPS);
-      }
-
-      activateStep(step) {
-        this.currentStep = step % PAGINATION_STEPS;
-        this.dots.forEach((dot, i) => {
-          dot.classList.toggle("active", i === this.currentStep);
-          const fill = dot.querySelector(".fill");
-          fill.style.transform = "scaleX(0)";
-        });
-        this.progressFill = this.dots[this.currentStep].querySelector(".fill");
       }
 
       setProgress(progress) {
-        if (!this.progressFill) return;
-        this.progressFill.style.transform = `scaleX(${Math.max(0, Math.min(progress, 1))})`;
+        if (!this.fillEl) return;
+        const clamped = Math.max(0, Math.min(progress, 1));
+        this.fillEl.style.transform = `scaleX(${clamped})`;
       }
 
       applyInitial() {
-        const first = this.data.students[this.index];
-        this.backA.src = first.backImage;
-        this.frontA.src = first.frontImage;
-        this.backA.alt = `${first.name} ${this.data.program.toLowerCase()} bakgrund`;
-        this.frontA.alt = `${first.name} ${this.data.program.toLowerCase()} förgrund`;
-        this.studentEl.textContent = first.name.toUpperCase();
+        const item = this.data.students[this.studentIndex];
+        this.backA.src = item.backImage;
+        this.frontA.src = item.frontImage;
+        this.studentEl.textContent = item.name.toUpperCase();
         this.programEl.textContent = this.data.program;
       }
 
-      next() {
-        this.index = (this.index + 1) % this.data.students.length;
-        const nextData = this.data.students[this.index];
-        const showA = this.slotName !== "a";
+      nextSlide() {
+        this.studentIndex = (this.studentIndex + 1) % this.data.students.length;
+        const next = this.data.students[this.studentIndex];
+        const showA = this.visibleSlot !== "a";
         const nextBack = showA ? this.backA : this.backB;
-        const nextFront = showA ? this.frontA : this.frontB;
         const prevBack = showA ? this.backB : this.backA;
+        const nextFront = showA ? this.frontA : this.frontB;
         const prevFront = showA ? this.frontB : this.frontA;
 
-        nextBack.src = nextData.backImage;
-        nextBack.alt = `${nextData.name} ${this.data.program.toLowerCase()} bakgrund`;
-        nextFront.src = nextData.frontImage;
-        nextFront.alt = `${nextData.name} ${this.data.program.toLowerCase()} förgrund`;
-
+        nextBack.src = next.backImage;
+        nextFront.src = next.frontImage;
         nextBack.classList.add("is-visible");
         prevBack.classList.remove("is-visible");
 
         window.setTimeout(() => {
           nextFront.classList.add("is-visible");
           prevFront.classList.remove("is-visible");
-          this.studentEl.textContent = nextData.name.toUpperCase();
-          this.programEl.textContent = this.data.program;
+          this.studentEl.textContent = next.name.toUpperCase();
         }, FRONT_DELAY_MS);
 
-        this.slotName = showA ? "a" : "b";
-        this.tick += 1;
-        this.activateStep(this.tick % PAGINATION_STEPS);
+        this.visibleSlot = showA ? "a" : "b";
+        this.step = (this.step + 1) % PAGINATION_COUNT;
+        this.renderPagination();
         this.cycleStart = performance.now();
         this.setProgress(0);
       }
 
       frame(now) {
-        const elapsed = now - this.cycleStart;
-        const progress = elapsed / SLIDE_MS;
+        const progress = (now - this.cycleStart) / SLIDE_MS;
         this.setProgress(progress);
-        if (elapsed >= SLIDE_MS) {
-          this.next();
+        if (progress >= 1) {
+          this.nextSlide();
         }
       }
     }
 
     const cards = [
-      new HeroCard(document.querySelector("#col-form"), cardData.form, { startStep: 0, startProgress: 0.41 }),
-      new HeroCard(document.querySelector("#col-mode"), cardData.mode, { startStep: 3, startProgress: 0.58 }),
-      new HeroCard(document.querySelector("#col-vk"), cardData.vk, { startStep: 4, startProgress: 0.24 })
+      new CardSlideshow(document.querySelector("#col-form"), cardData.form, { startStep: 0, startProgress: 0.33 }),
+      new CardSlideshow(document.querySelector("#col-mode"), cardData.mode, { startStep: 2, startProgress: 0.33 }),
+      new CardSlideshow(document.querySelector("#col-vk"), cardData.vk, { startStep: 3, startProgress: 0.66 })
     ];
 
     function animate(now) {
