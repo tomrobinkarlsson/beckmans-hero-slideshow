@@ -41,12 +41,12 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 34px;
-      background: #0c0c0c;
+      height: 46px;
+      background: #090909;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 12px;
+      padding: 0 10px;
       z-index: 5;
     }
 
@@ -67,9 +67,23 @@
     .chrome-dot.yellow { background: #febc2e; }
     .chrome-dot.green { background: #28c840; }
 
+    .chrome-center {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chrome-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #cfcfcf;
+      opacity: 0.9;
+    }
+
     .chrome-url {
-      height: 22px;
-      width: min(52vw, 440px);
+      height: 24px;
+      width: min(52vw, 470px);
       border-radius: 999px;
       background: #111;
       border: 1px solid #1f1f1f;
@@ -86,14 +100,24 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: #fff;
-      font-size: 12px;
+      color: #e9e9e9;
+      font-size: 0;
       opacity: 0.9;
+    }
+
+    .chrome-icon {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .nav {
       position: absolute;
-      top: 50px;
+      top: 62px;
       left: 16px;
       right: 16px;
       display: flex;
@@ -129,7 +153,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      top: 146px;
+      top: 206px;
       bottom: 0;
       display: flex;
       align-items: stretch;
@@ -170,14 +194,22 @@
     }
 
     .image-layer.front {
-      inset: 4.375% 5.625%;
+      left: 28px;
+      right: 28px;
+      top: 28px;
+      bottom: 77px;
       overflow: hidden;
+    }
+
+    #col-vk .image-layer.front {
+      top: 26px;
+      bottom: 77px;
     }
 
     .overlay {
       position: absolute;
-      left: 0;
-      top: 16px;
+      left: 28px;
+      top: 28px;
       display: flex;
       flex-direction: column;
       gap: 0;
@@ -185,11 +217,13 @@
       font-family: "Geist Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
       text-transform: uppercase !important;
       letter-spacing: 1.04px;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       font-size: 13px;
       color: #fff;
       z-index: 2;
+    }
+
+    #col-vk .overlay {
+      top: 26px;
     }
 
     .label-row {
@@ -218,17 +252,7 @@
       font-feature-settings: "ss09" 1, "ss08" 1;
     }
 
-    .subtitle-text {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .subtitle-arrow {
-      font-size: 12px;
-      letter-spacing: 0;
-      transform: translateY(-1px);
-    }
+    .subtitle-text { display: inline-flex; align-items: center; }
 
     .cap-right {
       width: 15px;
@@ -294,15 +318,16 @@
 
     .card-footer {
       position: absolute;
-      left: 16px;
-      right: 16px;
-      bottom: 10px;
+      left: 28px;
+      right: 29px;
+      bottom: 27px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: center;
       color: #fff;
       z-index: 3;
       pointer-events: none;
+      height: 24px;
     }
 
     .card-footer .footer-title {
@@ -321,10 +346,12 @@
     }
 
     .card-footer .footer-plus {
-      font-size: 52px;
-      line-height: 0.78;
-      font-weight: 400;
-      transform: translateY(3px);
+      width: 24px;
+      height: 24px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 1.4;
+      stroke-linecap: round;
     }
 
     @media (max-width: 1100px) {
@@ -332,7 +359,7 @@
         font-size: 14px;
       }
       .hero {
-        top: 132px;
+        top: 190px;
       }
       .overlay {
         zoom: 0.92;
@@ -377,8 +404,17 @@
         <span class="chrome-dot yellow"></span>
         <span class="chrome-dot green"></span>
       </div>
-      <div class="chrome-url">beckmans.se</div>
-      <div class="chrome-right">⤴︎ ＋</div>
+      <div class="chrome-center">
+        <div class="chrome-nav">
+          <svg class="chrome-icon" viewBox="0 0 16 16"><path d="M10.2 3.2 5.4 8l4.8 4.8"/></svg>
+          <svg class="chrome-icon" viewBox="0 0 16 16"><path d="m5.8 3.2 4.8 4.8-4.8 4.8"/></svg>
+        </div>
+        <div class="chrome-url">beckmans.se</div>
+      </div>
+      <div class="chrome-right">
+        <svg class="chrome-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.8v3.2l2.4 1.6"/></svg>
+        <svg class="chrome-icon" viewBox="0 0 16 16"><path d="M5 8h6M8 5v6"/></svg>
+      </div>
     </div>
 
     <header class="nav">
@@ -420,13 +456,13 @@
             <span class="label-sep"></span>
             <div class="label-row">
               <span class="cap-left"></span>
-              <span class="cap-middle subtitle-text"><span class="subtitle"></span><span class="subtitle-arrow">➔</span></span>
+              <span class="cap-middle subtitle-text"><span class="subtitle"></span></span>
               <span class="cap-right"></span>
             </div>
           </div>
           <div class="card-footer">
             <span class="footer-title">form <small>180hp</small></span>
-            <span class="footer-plus">+</span>
+            <svg class="footer-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12h22"/><path d="M12 1v22"/></svg>
           </div>
         </div>
       </article>
@@ -456,13 +492,13 @@
             <span class="label-sep"></span>
             <div class="label-row">
               <span class="cap-left"></span>
-              <span class="cap-middle subtitle-text"><span class="subtitle"></span><span class="subtitle-arrow">➔</span></span>
+              <span class="cap-middle subtitle-text"><span class="subtitle"></span></span>
               <span class="cap-right"></span>
             </div>
           </div>
           <div class="card-footer">
             <span class="footer-title">mode <small>180hp</small></span>
-            <span class="footer-plus">+</span>
+            <svg class="footer-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12h22"/><path d="M12 1v22"/></svg>
           </div>
         </div>
       </article>
@@ -492,13 +528,13 @@
             <span class="label-sep"></span>
             <div class="label-row">
               <span class="cap-left"></span>
-              <span class="cap-middle subtitle-text"><span class="subtitle"></span><span class="subtitle-arrow">➔</span></span>
+              <span class="cap-middle subtitle-text"><span class="subtitle"></span></span>
               <span class="cap-right"></span>
             </div>
           </div>
           <div class="card-footer">
             <span class="footer-title">visuell kommunikation <small>180hp</small></span>
-            <span class="footer-plus">+</span>
+            <svg class="footer-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12h22"/><path d="M12 1v22"/></svg>
           </div>
         </div>
       </article>
@@ -510,6 +546,7 @@
     const SLIDE_MS_MAX = 4400;
     const FRONT_DELAY_MS = 220;
     const PAGINATION_COUNT = 5;
+    const PROJECT_MAX_CHARS = 20;
 
     const cardData = {
       form: {
@@ -519,28 +556,31 @@
             name: "Mikael Westman",
             backImage: "https://beckmans.se/wp-content/uploads/2025/10/501A9043-2-Edit-1-1200x1500.jpg",
             frontImage: "https://beckmans.se/wp-content/uploads/2025/02/stool-mikael.westman-02-1500x844.jpg",
-            subtitle: "CREATIONS FROM NORTH",
-            showArrow: false
+            project: "Creations from north"
           },
           {
             name: "Erik Marklund",
             backImage: "https://beckmans.se/wp-content/uploads/2025/06/Erik-Marklund-Beckmans-Designhogskola-4-1500x1200.jpg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2025/02/Pula_Erik_Marklund_Beckmans_2-1200x1500.jpg"
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/02/Pula_Erik_Marklund_Beckmans_2-1200x1500.jpg",
+            project: "Spännband"
           },
           {
             name: "Lina Blass",
             backImage: "https://beckmans.se/wp-content/uploads/2021/10/Beckmans_Stilleben_skal_agg-1000x1500.jpg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2020/10/TO_1-1500x1000.jpg"
+            frontImage: "https://beckmans.se/wp-content/uploads/2020/10/TO_1-1500x1000.jpg",
+            project: "Stilleben"
           },
           {
             name: "Simon Mattisson",
             backImage: "https://beckmans.se/wp-content/uploads/2021/10/1000_oredi_blC3A5_POST_PS-1024x1024.png.webp",
-            frontImage: "https://beckmans.se/wp-content/uploads/2021/10/1000_boi_tvC3A5.png_OOredi_POST_PS-1024x1024.png.webp"
+            frontImage: "https://beckmans.se/wp-content/uploads/2021/10/1000_boi_tvC3A5.png_OOredi_POST_PS-1024x1024.png.webp",
+            project: "Blue Note"
           },
           {
             name: "Rebecca Wiik",
             backImage: "https://beckmans.se/wp-content/uploads/2022/11/Beckmans_OVIS-2-1002x1500.png",
-            frontImage: "https://beckmans.se/wp-content/uploads/2022/11/Ska%CC%88rmavbild-2022-11-20-kl.-16.28.29-1117x1500.png"
+            frontImage: "https://beckmans.se/wp-content/uploads/2022/11/Ska%CC%88rmavbild-2022-11-20-kl.-16.28.29-1117x1500.png",
+            project: "OVIS"
           }
         ]
       },
@@ -550,27 +590,32 @@
           {
             name: "Asli Cömert",
             backImage: "https://beckmans.se/wp-content/uploads/2021/01/BILDNOBEL3-1000x1500.jpg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2021/01/BILDNOBEL2-1000x1500.jpg"
+            frontImage: "https://beckmans.se/wp-content/uploads/2021/01/BILDNOBEL2-1000x1500.jpg",
+            project: "A Call To Prayer"
           },
           {
             name: "Amanda Stuve",
             backImage: "https://beckmans.se/wp-content/uploads/2021/11/envC3A4lde_1-992x1500.jpg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2021/11/AmandaStuvePresentation_Page_7af-1494x1500.png"
+            frontImage: "https://beckmans.se/wp-content/uploads/2021/11/AmandaStuvePresentation_Page_7af-1494x1500.png",
+            project: "E N V Ä L D E"
           },
           {
             name: "Anna Lastro",
             backImage: "https://beckmans.se/wp-content/uploads/2023/05/Anna_007_bild-alvanylander-1200x1500.jpg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2023/05/Anna_002_bild-alvanylander-1200x1500.jpg"
+            frontImage: "https://beckmans.se/wp-content/uploads/2023/05/Anna_002_bild-alvanylander-1200x1500.jpg",
+            project: "Office Attire Satire"
           },
           {
             name: "Karolina Pettersson",
             backImage: "https://beckmans.se/wp-content/uploads/2023/05/karolina_pettersson_01_photo_mathias_nordgren-copy-1000x1500.webp",
-            frontImage: "https://beckmans.se/wp-content/uploads/2023/05/karolina_pettersson_05_photo_mathias_nordgren-copy-1000x1500.webp"
+            frontImage: "https://beckmans.se/wp-content/uploads/2023/05/karolina_pettersson_05_photo_mathias_nordgren-copy-1000x1500.webp",
+            project: "Och solen har sin gång"
           },
           {
             name: "Sarah Niklasson",
             backImage: "https://beckmans.se/wp-content/uploads/2020/01/ANDYJPG12_1-1069x1500.jpg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2020/01/ANDYJPG8-1069x1500.jpg"
+            frontImage: "https://beckmans.se/wp-content/uploads/2020/01/ANDYJPG8-1069x1500.jpg",
+            project: "Material collection"
           }
         ]
       },
@@ -580,31 +625,41 @@
           {
             name: "Olle Ljung",
             backImage: "https://beckmans.se/wp-content/uploads/2025/12/491418745_18385417684138754_597021362675519425_n.jpeg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2025/12/491418745_18385417684138754_597021362675519425_n.jpeg"
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/12/491418745_18385417684138754_597021362675519425_n.jpeg",
+            project: "What Happens In The Arctic"
           },
           {
             name: "Emilia Lind",
             backImage: "https://beckmans.se/wp-content/uploads/2025/05/Bild-1-JPEG-optimerad-1200x1500.jpg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2024/10/SinisterManus_detalj-1500x1500.jpg"
+            frontImage: "https://beckmans.se/wp-content/uploads/2024/10/SinisterManus_detalj-1500x1500.jpg",
+            project: "Sinister Manus"
           },
           {
             name: "Emmy Seeger",
             backImage: "https://beckmans.se/wp-content/uploads/2025/02/1-2.png",
-            frontImage: "https://beckmans.se/wp-content/uploads/2025/02/1-1.png"
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/02/1-1.png",
+            project: "Verket"
           },
           {
             name: "Nayra Aly",
             backImage: "https://beckmans.se/wp-content/uploads/2025/05/Nayra_Aly_Projektfoto_Nayra_Aly_2025_HR-1200x1500.jpg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2025/05/Philip_Holm_Forfattarbild_Nayra_Aly_2025_HR-copy-400x400.jpg"
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/05/Philip_Holm_Forfattarbild_Nayra_Aly_2025_HR-copy-400x400.jpg",
+            project: "Longing for Belonging"
           },
           {
             name: "Sara Solén",
             backImage: "https://beckmans.se/wp-content/uploads/2020/12/fr-insta1-1024x1024.png.webp",
-            frontImage: "https://beckmans.se/wp-content/uploads/2020/12/fr-insta1-1024x1024.png.webp"
+            frontImage: "https://beckmans.se/wp-content/uploads/2020/12/fr-insta1-1024x1024.png.webp",
+            project: "Fougère Royale"
           }
         ]
       }
     };
+
+    function truncateProject(value) {
+      const v = (value || "").trim();
+      return v.length <= PROJECT_MAX_CHARS ? v : v.slice(0, PROJECT_MAX_CHARS);
+    }
 
     function randomDuration() {
       return SLIDE_MS_MIN + Math.random() * (SLIDE_MS_MAX - SLIDE_MS_MIN);
@@ -627,7 +682,6 @@
         this.frontB = root.querySelector(".image-layer.front .slot-b");
         this.studentEl = root.querySelector(".student");
         this.subtitleEl = root.querySelector(".subtitle");
-        this.subtitleArrowEl = root.querySelector(".subtitle-arrow");
         this.paginationEl = root.querySelector(".mini-pagination");
         this.fillEl = null;
 
@@ -668,8 +722,7 @@
         this.backA.src = item.backImage;
         this.frontA.src = item.frontImage;
         this.studentEl.textContent = item.name.toUpperCase();
-        this.subtitleEl.textContent = (item.subtitle || this.data.program).toUpperCase();
-        this.subtitleArrowEl.style.display = item.showArrow === false ? "none" : "inline";
+        this.subtitleEl.textContent = truncateProject(item.project).toUpperCase();
       }
 
       nextSlide() {
@@ -690,8 +743,7 @@
           nextFront.classList.add("is-visible");
           prevFront.classList.remove("is-visible");
           this.studentEl.textContent = next.name.toUpperCase();
-          this.subtitleEl.textContent = (next.subtitle || this.data.program).toUpperCase();
-          this.subtitleArrowEl.style.display = next.showArrow === false ? "none" : "inline";
+          this.subtitleEl.textContent = truncateProject(next.project).toUpperCase();
         }, FRONT_DELAY_MS);
 
         this.visibleSlot = showA ? "a" : "b";
