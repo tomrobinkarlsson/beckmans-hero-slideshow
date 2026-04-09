@@ -5,126 +5,231 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Beckmans Hero Slideshow</title>
   <style>
-    :root {
-      --bg: #efefef;
-      --ink: #231f20;
-      --card-radius: 6px;
-      --pill-bg: #000;
-      --pill-text: #fff;
+    @import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@500&display=swap");
+
+    @font-face {
+      font-family: "FuturaEFOP-DemiBold";
+      src: url("./assets/fonts/FuturaEFOP-DemiBold.otf") format("opentype");
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
     }
-    * { box-sizing: border-box; }
+
+    :root {
+      --bg: #f0f0f0;
+      --ink: #231f20;
+      --edge: 16px;
+      --card-h-max: min(612px, calc(100vh - 188px));
+      --card-w-max: calc(var(--card-h-max) * 0.75);
+      --card-w: min(var(--card-w-max), calc((100vw - (var(--edge) * 2) - 32px) / 3));
+      --card-h: calc(var(--card-w) / 0.75);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       background: var(--bg);
       color: var(--ink);
-      font-family: "Futura PT", "Avenir Next", "Avenir", "Helvetica Neue", Arial, sans-serif;
-    }
-    .page {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 16px;
+      font-family: "FuturaEFOP-DemiBold", "Avenir Next", "Avenir", "Helvetica Neue", Arial, sans-serif;
       min-height: 100vh;
     }
-    .nav {
-      display: grid;
-      grid-template-columns: 1fr auto auto auto auto auto auto;
-      align-items: center;
-      gap: 24px;
-      font-size: 16px;
-      text-transform: lowercase;
+
+    .page {
+      width: min(1440px, 100vw);
+      margin: 0 auto;
+      padding: var(--edge);
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
     }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      text-transform: lowercase;
+      line-height: 1;
+      user-select: none;
+    }
+
     .nav .brand {
       text-transform: none;
-      font-weight: 600;
+      margin-right: auto;
+      letter-spacing: 0;
     }
+
+    .nav .spacer {
+      width: 44px;
+      flex: 0 0 44px;
+    }
+
     .hero {
-      margin-top: 120px;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(280px, 1fr));
-      gap: 12px;
+      position: absolute;
+      left: var(--edge);
+      right: var(--edge);
+      bottom: var(--edge);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
     }
-    .hero-col { min-width: 0; }
+
+    .hero-col {
+      width: var(--card-w);
+      min-width: 0;
+    }
+
     .pagination {
       height: 10px;
       display: flex;
       gap: 8px;
       align-items: center;
-      margin: 0 0 10px 0;
-      padding-left: 2px;
+      margin: 0 0 14px 0;
+      padding-left: 1px;
     }
+
     .dot {
       width: 10px;
       height: 8px;
       border: 1px solid #000;
       border-radius: 999px;
-      opacity: 0.9;
       background: transparent;
+      position: relative;
     }
+
     .dot.active {
       width: 50px;
-      position: relative;
-      overflow: hidden;
-      background: transparent;
     }
+
+    .dot .track,
     .dot .fill {
       position: absolute;
       top: 50%;
       left: 3px;
       width: calc(100% - 6px);
       height: 2px;
-      transform-origin: left center;
-      transform: scaleX(0);
-      background: #000;
       translate: 0 -50%;
       border-radius: 999px;
+      transform-origin: center center;
+      opacity: 0;
     }
+
+    .dot .track {
+      background: #000;
+      transform: scaleX(0.12);
+    }
+
+    .dot .fill {
+      background: #000;
+      transform: scaleX(0);
+      background: #000;
+    }
+
+    .dot.active .track,
+    .dot.active .fill {
+      opacity: 1;
+    }
+
     .card {
       position: relative;
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      border-radius: var(--card-radius);
+      width: var(--card-w);
+      height: var(--card-h);
+      border-radius: 4px;
       overflow: hidden;
-      background: #d7d7d7;
+      background: #dbdbdb;
     }
+
     .image-layer {
       position: absolute;
       inset: 0;
       overflow: hidden;
+      border-radius: 4px;
     }
-    .image-layer.front { inset: 22px; border-radius: 3px; }
+
+    .image-layer.front {
+      inset: 29px 27px;
+      border-radius: 2px;
+    }
+
     .slot {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
       opacity: 0;
       transition: opacity 520ms ease;
       will-change: opacity;
     }
-    .slot.is-visible { opacity: 1; }
+
+    .slot.is-visible {
+      opacity: 1;
+    }
+
     .caption {
       position: absolute;
       left: 10px;
       bottom: 10px;
-      background: rgba(0, 0, 0, 0.78);
-      color: var(--pill-text);
-      border-radius: 999px;
-      padding: 6px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
       font-family: "Geist Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
       text-transform: uppercase;
-      line-height: 1.3;
+      line-height: 1;
       letter-spacing: 0.08em;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       font-size: 12px;
+      color: #fff;
     }
-    .caption .student { display: block; }
-    .caption .meta { display: block; white-space: nowrap; }
+
+    .caption-line {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      min-height: 24px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.98);
+      padding: 0 10px;
+      white-space: nowrap;
+    }
+
+    .caption-line.program::after {
+      content: "→";
+      margin-left: 8px;
+      font-size: 12px;
+      line-height: 1;
+    }
+
     @media (max-width: 1100px) {
-      .hero { grid-template-columns: 1fr; margin-top: 48px; }
-      .nav { grid-template-columns: 1fr auto; row-gap: 10px; }
-      .nav span:nth-child(n + 3):nth-child(-n + 7) { display: none; }
+      .nav span:nth-child(5),
+      .nav span:nth-child(6) {
+        display: none;
+      }
+      :root {
+        --card-w: min(420px, calc(100vw - (var(--edge) * 2)));
+        --card-h: calc(var(--card-w) / 0.75);
+      }
+      .page {
+        overflow-y: auto;
+      }
+      .hero {
+        position: static;
+        margin-top: 48px;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        padding-bottom: var(--edge);
+      }
+      .hero-col {
+        width: var(--card-w);
+      }
     }
   </style>
 </head>
@@ -138,6 +243,7 @@
       <span>kvällskolan</span>
       <span>ansök</span>
       <span>⌕</span>
+      <span class="spacer" aria-hidden="true"></span>
     </header>
 
     <section class="hero">
@@ -153,8 +259,8 @@
             <img class="slot slot-b" alt="">
           </div>
           <div class="caption">
-            <span class="student"></span>
-            <span class="meta"></span>
+            <span class="caption-line student"></span>
+            <span class="caption-line program"></span>
           </div>
         </div>
       </article>
@@ -171,8 +277,8 @@
             <img class="slot slot-b" alt="">
           </div>
           <div class="caption">
-            <span class="student"></span>
-            <span class="meta"></span>
+            <span class="caption-line student"></span>
+            <span class="caption-line program"></span>
           </div>
         </div>
       </article>
@@ -189,8 +295,8 @@
             <img class="slot slot-b" alt="">
           </div>
           <div class="caption">
-            <span class="student"></span>
-            <span class="meta"></span>
+            <span class="caption-line student"></span>
+            <span class="caption-line program"></span>
           </div>
         </div>
       </article>
@@ -208,13 +314,11 @@
         students: [
           {
             name: "Mikael Westman",
-            work: "Vattenlilja",
             backImage: "https://beckmans.se/wp-content/uploads/2025/10/501A9043-2-Edit-1-1200x1500.jpg",
             frontImage: "https://beckmans.se/wp-content/uploads/2025/02/stool-mikael.westman-02-1500x844.jpg"
           },
           {
             name: "Erik Marklund",
-            work: "Spännband",
             backImage: "https://beckmans.se/wp-content/uploads/2025/06/Erik-Marklund-Beckmans-Designhogskola-4-1500x1200.jpg",
             frontImage: "https://beckmans.se/wp-content/uploads/2025/02/Pula_Erik_Marklund_Beckmans_2-1200x1500.jpg"
           }
@@ -225,13 +329,11 @@
         students: [
           {
             name: "Asli Cömert",
-            work: "A Call To Prayer",
             backImage: "https://beckmans.se/wp-content/uploads/2021/01/hqdefault-1.jpg",
             frontImage: "https://beckmans.se/wp-content/uploads/2021/01/BILDNOBEL1_1-1000x1500.jpg"
           },
           {
             name: "Nadja Olsson",
-            work: "Vestige – Accessories 2025",
             backImage: "https://beckmans.se/wp-content/uploads/2025/12/VESTIGE2MB.1-1000x1500.jpg",
             frontImage: "https://beckmans.se/wp-content/uploads/2025/12/BECKMANS_2024112588817-1057x1500.jpg"
           }
@@ -242,13 +344,11 @@
         students: [
           {
             name: "Olle Ljung",
-            work: "What Happens In The Arctic",
             backImage: "https://beckmans.se/wp-content/uploads/2025/12/491418745_18385417684138754_597021362675519425_n.jpeg",
             frontImage: "https://beckmans.se/wp-content/uploads/2025/12/Chronically-Online-1500x1000.jpg"
           },
           {
             name: "Adam Arinbjarnarson",
-            work: "Material Imperfections",
             backImage: "https://beckmans.se/wp-content/uploads/2025/05/adam_arinbjarnarson_2025_HR.jpg",
             frontImage: "https://beckmans.se/wp-content/uploads/2024/03/material-1-1071x1500.jpg"
           }
@@ -257,27 +357,29 @@
     };
 
     class HeroCard {
-      constructor(root, data, cycleOffset = 0) {
+      constructor(root, data, options = {}) {
         this.root = root;
         this.data = data;
         this.index = 0;
         this.slotName = "a";
-        this.tick = 0;
+        this.tick = options.startStep ?? 0;
+        this.startProgress = options.startProgress ?? 0;
         this.lastNow = performance.now();
-        this.cycleStart = this.lastNow - cycleOffset * SLIDE_MS;
+        this.cycleStart = this.lastNow - this.startProgress * SLIDE_MS;
 
         this.backA = root.querySelector(".image-layer.back .slot-a");
         this.backB = root.querySelector(".image-layer.back .slot-b");
         this.frontA = root.querySelector(".image-layer.front .slot-a");
         this.frontB = root.querySelector(".image-layer.front .slot-b");
         this.studentEl = root.querySelector(".student");
-        this.metaEl = root.querySelector(".meta");
+        this.programEl = root.querySelector(".program");
 
         this.paginationRoot = root.querySelector(".pagination");
         this.progressFill = null;
         this.currentStep = 0;
         this.setupPagination();
         this.applyInitial();
+        this.setProgress(this.startProgress);
       }
 
       setupPagination() {
@@ -286,13 +388,16 @@
         for (let i = 0; i < PAGINATION_STEPS; i += 1) {
           const dot = document.createElement("span");
           dot.className = "dot";
+          const track = document.createElement("span");
+          track.className = "track";
           const fill = document.createElement("span");
           fill.className = "fill";
+          dot.appendChild(track);
           dot.appendChild(fill);
           this.paginationRoot.appendChild(dot);
           this.dots.push(dot);
         }
-        this.activateStep(0);
+        this.activateStep(this.tick % PAGINATION_STEPS);
       }
 
       activateStep(step) {
@@ -317,7 +422,7 @@
         this.backA.alt = `${first.name} ${this.data.program.toLowerCase()} bakgrund`;
         this.frontA.alt = `${first.name} ${this.data.program.toLowerCase()} förgrund`;
         this.studentEl.textContent = first.name.toUpperCase();
-        this.metaEl.textContent = `${first.work.toUpperCase()} · ${this.data.program} →`;
+        this.programEl.textContent = this.data.program;
       }
 
       next() {
@@ -341,7 +446,7 @@
           nextFront.classList.add("is-visible");
           prevFront.classList.remove("is-visible");
           this.studentEl.textContent = nextData.name.toUpperCase();
-          this.metaEl.textContent = `${nextData.work.toUpperCase()} · ${this.data.program} →`;
+          this.programEl.textContent = this.data.program;
         }, FRONT_DELAY_MS);
 
         this.slotName = showA ? "a" : "b";
@@ -362,9 +467,9 @@
     }
 
     const cards = [
-      new HeroCard(document.querySelector("#col-form"), cardData.form, 0.34),
-      new HeroCard(document.querySelector("#col-mode"), cardData.mode, 0.62),
-      new HeroCard(document.querySelector("#col-vk"), cardData.vk, 0.21)
+      new HeroCard(document.querySelector("#col-form"), cardData.form, { startStep: 0, startProgress: 0.41 }),
+      new HeroCard(document.querySelector("#col-mode"), cardData.mode, { startStep: 3, startProgress: 0.58 }),
+      new HeroCard(document.querySelector("#col-vk"), cardData.vk, { startStep: 4, startProgress: 0.24 })
     ];
 
     function animate(now) {
