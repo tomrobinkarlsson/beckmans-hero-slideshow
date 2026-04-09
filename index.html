@@ -36,9 +36,64 @@
       background: #fff;
     }
 
+    .browser-chrome {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 34px;
+      background: #0c0c0c;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      z-index: 5;
+    }
+
+    .chrome-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chrome-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .chrome-dot.red { background: #ff5f57; }
+    .chrome-dot.yellow { background: #febc2e; }
+    .chrome-dot.green { background: #28c840; }
+
+    .chrome-url {
+      height: 22px;
+      width: min(52vw, 440px);
+      border-radius: 999px;
+      background: #111;
+      border: 1px solid #1f1f1f;
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.9;
+    }
+
+    .chrome-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
     .nav {
       position: absolute;
-      top: 16px;
+      top: 50px;
       left: 16px;
       right: 16px;
       display: flex;
@@ -74,7 +129,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      top: 114px;
+      top: 146px;
       bottom: 0;
       display: flex;
       align-items: stretch;
@@ -122,7 +177,7 @@
     .overlay {
       position: absolute;
       left: 0;
-      bottom: 16px;
+      top: 16px;
       display: flex;
       flex-direction: column;
       gap: 0;
@@ -163,14 +218,13 @@
       font-feature-settings: "ss09" 1, "ss08" 1;
     }
 
-    .program-text {
+    .subtitle-text {
       display: inline-flex;
       align-items: center;
       gap: 8px;
     }
 
-    .program-text::after {
-      content: "➔";
+    .subtitle-arrow {
       font-size: 12px;
       letter-spacing: 0;
       transform: translateY(-1px);
@@ -238,15 +292,59 @@
       transform: scaleX(0);
     }
 
+    .card-footer {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      color: #fff;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .card-footer .footer-title {
+      font-size: 38px;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      text-transform: lowercase;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .card-footer .footer-title small {
+      font-size: 30px;
+      letter-spacing: -0.02em;
+    }
+
+    .card-footer .footer-plus {
+      font-size: 52px;
+      line-height: 0.78;
+      font-weight: 400;
+      transform: translateY(3px);
+    }
+
     @media (max-width: 1100px) {
       .nav {
         font-size: 14px;
       }
       .hero {
-        top: 96px;
+        top: 132px;
       }
       .overlay {
         zoom: 0.92;
+      }
+      .card-footer .footer-title {
+        font-size: 28px;
+      }
+      .card-footer .footer-title small {
+        font-size: 22px;
+      }
+      .card-footer .footer-plus {
+        font-size: 38px;
       }
     }
 
@@ -273,6 +371,16 @@
 </head>
 <body>
   <main class="page">
+    <div class="browser-chrome" aria-hidden="true">
+      <div class="chrome-left">
+        <span class="chrome-dot red"></span>
+        <span class="chrome-dot yellow"></span>
+        <span class="chrome-dot green"></span>
+      </div>
+      <div class="chrome-url">beckmans.se</div>
+      <div class="chrome-right">⤴︎ ＋</div>
+    </div>
+
     <header class="nav">
       <span class="brand">beckmans designhögskola</span>
       <span>form</span>
@@ -300,21 +408,25 @@
           <div class="overlay">
             <div class="label-row">
               <span class="cap-left"></span>
+              <span class="cap-middle pager-middle"><span class="mini-pagination"></span></span>
+              <span class="cap-right"></span>
+            </div>
+            <span class="label-sep"></span>
+            <div class="label-row">
+              <span class="cap-left"></span>
               <span class="cap-middle student"></span>
               <span class="cap-right"></span>
             </div>
             <span class="label-sep"></span>
             <div class="label-row">
               <span class="cap-left"></span>
-              <span class="cap-middle program-text program"></span>
+              <span class="cap-middle subtitle-text"><span class="subtitle"></span><span class="subtitle-arrow">➔</span></span>
               <span class="cap-right"></span>
             </div>
-            <span class="label-sep"></span>
-            <div class="label-row">
-              <span class="cap-left"></span>
-              <span class="cap-middle pager-middle"><span class="mini-pagination"></span></span>
-              <span class="cap-right"></span>
-            </div>
+          </div>
+          <div class="card-footer">
+            <span class="footer-title">form <small>180hp</small></span>
+            <span class="footer-plus">+</span>
           </div>
         </div>
       </article>
@@ -332,21 +444,25 @@
           <div class="overlay">
             <div class="label-row">
               <span class="cap-left"></span>
+              <span class="cap-middle pager-middle"><span class="mini-pagination"></span></span>
+              <span class="cap-right"></span>
+            </div>
+            <span class="label-sep"></span>
+            <div class="label-row">
+              <span class="cap-left"></span>
               <span class="cap-middle student"></span>
               <span class="cap-right"></span>
             </div>
             <span class="label-sep"></span>
             <div class="label-row">
               <span class="cap-left"></span>
-              <span class="cap-middle program-text program"></span>
+              <span class="cap-middle subtitle-text"><span class="subtitle"></span><span class="subtitle-arrow">➔</span></span>
               <span class="cap-right"></span>
             </div>
-            <span class="label-sep"></span>
-            <div class="label-row">
-              <span class="cap-left"></span>
-              <span class="cap-middle pager-middle"><span class="mini-pagination"></span></span>
-              <span class="cap-right"></span>
-            </div>
+          </div>
+          <div class="card-footer">
+            <span class="footer-title">mode <small>180hp</small></span>
+            <span class="footer-plus">+</span>
           </div>
         </div>
       </article>
@@ -364,21 +480,25 @@
           <div class="overlay">
             <div class="label-row">
               <span class="cap-left"></span>
+              <span class="cap-middle pager-middle"><span class="mini-pagination"></span></span>
+              <span class="cap-right"></span>
+            </div>
+            <span class="label-sep"></span>
+            <div class="label-row">
+              <span class="cap-left"></span>
               <span class="cap-middle student"></span>
               <span class="cap-right"></span>
             </div>
             <span class="label-sep"></span>
             <div class="label-row">
               <span class="cap-left"></span>
-              <span class="cap-middle program-text program"></span>
+              <span class="cap-middle subtitle-text"><span class="subtitle"></span><span class="subtitle-arrow">➔</span></span>
               <span class="cap-right"></span>
             </div>
-            <span class="label-sep"></span>
-            <div class="label-row">
-              <span class="cap-left"></span>
-              <span class="cap-middle pager-middle"><span class="mini-pagination"></span></span>
-              <span class="cap-right"></span>
-            </div>
+          </div>
+          <div class="card-footer">
+            <span class="footer-title">visuell kommunikation <small>180hp</small></span>
+            <span class="footer-plus">+</span>
           </div>
         </div>
       </article>
@@ -398,7 +518,9 @@
           {
             name: "Mikael Westman",
             backImage: "https://beckmans.se/wp-content/uploads/2025/10/501A9043-2-Edit-1-1200x1500.jpg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2025/02/stool-mikael.westman-02-1500x844.jpg"
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/02/stool-mikael.westman-02-1500x844.jpg",
+            subtitle: "CREATIONS FROM NORTH",
+            showArrow: false
           },
           {
             name: "Erik Marklund",
@@ -504,7 +626,8 @@
         this.frontA = root.querySelector(".image-layer.front .slot-a");
         this.frontB = root.querySelector(".image-layer.front .slot-b");
         this.studentEl = root.querySelector(".student");
-        this.programEl = root.querySelector(".program");
+        this.subtitleEl = root.querySelector(".subtitle");
+        this.subtitleArrowEl = root.querySelector(".subtitle-arrow");
         this.paginationEl = root.querySelector(".mini-pagination");
         this.fillEl = null;
 
@@ -545,7 +668,8 @@
         this.backA.src = item.backImage;
         this.frontA.src = item.frontImage;
         this.studentEl.textContent = item.name.toUpperCase();
-        this.programEl.textContent = this.data.program;
+        this.subtitleEl.textContent = (item.subtitle || this.data.program).toUpperCase();
+        this.subtitleArrowEl.style.display = item.showArrow === false ? "none" : "inline";
       }
 
       nextSlide() {
@@ -566,6 +690,8 @@
           nextFront.classList.add("is-visible");
           prevFront.classList.remove("is-visible");
           this.studentEl.textContent = next.name.toUpperCase();
+          this.subtitleEl.textContent = (next.subtitle || this.data.program).toUpperCase();
+          this.subtitleArrowEl.style.display = next.showArrow === false ? "none" : "inline";
         }, FRONT_DELAY_MS);
 
         this.visibleSlot = showA ? "a" : "b";
