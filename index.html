@@ -28,9 +28,9 @@
     }
 
     .page {
-      width: min(100vw, 1440px);
+      width: 100vw;
       height: 100dvh;
-      margin: 0 auto;
+      margin: 0;
       position: relative;
       overflow: hidden;
       background: #fff;
@@ -106,7 +106,7 @@
       object-fit: cover;
       object-position: center;
       opacity: 0;
-      transition: opacity 540ms ease;
+      transition: none;
       will-change: opacity;
     }
 
@@ -125,7 +125,7 @@
       bottom: 16px;
       display: flex;
       flex-direction: column;
-      gap: 1px;
+      gap: 0;
       align-items: flex-start;
       font-family: "Geist Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
       text-transform: uppercase !important;
@@ -386,7 +386,8 @@
   </main>
 
   <script>
-    const SLIDE_MS = 3800;
+    const SLIDE_MS_MIN = 3200;
+    const SLIDE_MS_MAX = 4400;
     const FRONT_DELAY_MS = 220;
     const PAGINATION_COUNT = 5;
 
@@ -403,6 +404,21 @@
             name: "Erik Marklund",
             backImage: "https://beckmans.se/wp-content/uploads/2025/06/Erik-Marklund-Beckmans-Designhogskola-4-1500x1200.jpg",
             frontImage: "https://beckmans.se/wp-content/uploads/2025/02/Pula_Erik_Marklund_Beckmans_2-1200x1500.jpg"
+          },
+          {
+            name: "Julia Bianco Sommer",
+            backImage: "https://beckmans.se/wp-content/uploads/2025/04/HINTER_0325_02_copy-1000x1500.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/03/Raet-1-1-1061x1500.jpg"
+          },
+          {
+            name: "Lina Blass",
+            backImage: "https://beckmans.se/wp-content/uploads/2021/10/Beckmans_Stilleben_skal_agg-1000x1500.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2020/10/TO_1-1500x1000.jpg"
+          },
+          {
+            name: "Simon Mattisson",
+            backImage: "https://beckmans.se/wp-content/uploads/2021/10/1000_oredi_blC3A5_POST_PS-1024x1024.png.webp",
+            frontImage: "https://beckmans.se/wp-content/uploads/2021/10/1000_boi_tvC3A5.png_OOredi_POST_PS-1024x1024.png.webp"
           }
         ]
       },
@@ -418,6 +434,21 @@
             name: "Nadja Olsson",
             backImage: "https://beckmans.se/wp-content/uploads/2025/12/VESTIGE2MB.1-1000x1500.jpg",
             frontImage: "https://beckmans.se/wp-content/uploads/2025/12/BECKMANS_2024112588817-1057x1500.jpg"
+          },
+          {
+            name: "Amanda Stuve",
+            backImage: "https://beckmans.se/wp-content/uploads/2021/11/envC3A4lde_1-992x1500.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2021/11/AmandaStuvePresentation_Page_7af-1494x1500.png"
+          },
+          {
+            name: "Anna Lastro",
+            backImage: "https://beckmans.se/wp-content/uploads/2023/05/Anna_007_bild-alvanylander-1200x1500.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2023/05/Anna_002_bild-alvanylander-1200x1500.jpg"
+          },
+          {
+            name: "Karolina Pettersson",
+            backImage: "https://beckmans.se/wp-content/uploads/2023/05/karolina_pettersson_01_photo_mathias_nordgren-copy-1000x1500.webp",
+            frontImage: "https://beckmans.se/wp-content/uploads/2023/05/karolina_pettersson_05_photo_mathias_nordgren-copy-1000x1500.webp"
           }
         ]
       },
@@ -433,19 +464,53 @@
             name: "Adam Arinbjarnarson",
             backImage: "https://beckmans.se/wp-content/uploads/2025/05/adam_arinbjarnarson_2025_HR.jpg",
             frontImage: "https://beckmans.se/wp-content/uploads/2024/03/material-1-1071x1500.jpg"
+          },
+          {
+            name: "Rebecca Lagerstedt",
+            backImage: "https://beckmans.se/wp-content/uploads/2023/05/hqdefault.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2022/03/hqdefault-2.jpg"
+          },
+          {
+            name: "Hanna Hedberg",
+            backImage: "https://beckmans.se/wp-content/uploads/2024/12/Screenshot-2024-12-31-at-16.58.47-1105x1500.png",
+            frontImage: "https://beckmans.se/wp-content/uploads/2024/10/Screenshot-2024-10-06-at-17.15.53-1121x1500.png"
+          },
+          {
+            name: "Linn Willebrand",
+            backImage: "https://beckmans.se/wp-content/uploads/2025/09/Ateljen43.png",
+            frontImage: "https://beckmans.se/wp-content/uploads/2024/12/1960753958-ed4d515029d9ac0166846a240547e7a9c7b51c82a7e2468f0330d819979300c5-d_295x166-1.jpg"
           }
         ]
       }
     };
 
+    function shuffledIndices(length) {
+      const arr = Array.from({ length }, (_, i) => i);
+      for (let i = arr.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function randomDuration() {
+      return SLIDE_MS_MIN + Math.random() * (SLIDE_MS_MAX - SLIDE_MS_MIN);
+    }
+
     class CardSlideshow {
       constructor(root, data, options = {}) {
         this.root = root;
         this.data = data;
-        this.studentIndex = 0;
-        this.step = options.startStep ?? 0;
+        this.studentOrder = shuffledIndices(this.data.students.length);
+        this.studentOrderPos = 0;
+        this.studentIndex = this.studentOrder[this.studentOrderPos];
+        this.stepOrder = shuffledIndices(PAGINATION_COUNT);
+        this.stepOrderPos = 0;
+        this.step = this.stepOrder[this.stepOrderPos];
         this.visibleSlot = "a";
-        this.cycleStart = performance.now() - (options.startProgress ?? 0) * SLIDE_MS;
+        this.currentSlideDuration = randomDuration();
+        const startProgress = options.startProgress ?? Math.random();
+        this.cycleStart = performance.now() - startProgress * this.currentSlideDuration;
 
         this.backA = root.querySelector(".image-layer.back .slot-a");
         this.backB = root.querySelector(".image-layer.back .slot-b");
@@ -458,7 +523,7 @@
 
         this.renderPagination();
         this.applyInitial();
-        this.setProgress(options.startProgress ?? 0);
+        this.setProgress(startProgress);
       }
 
       renderPagination() {
@@ -496,8 +561,26 @@
         this.programEl.textContent = this.data.program;
       }
 
+      nextStudentIndex() {
+        this.studentOrderPos += 1;
+        if (this.studentOrderPos >= this.studentOrder.length) {
+          this.studentOrder = shuffledIndices(this.data.students.length);
+          this.studentOrderPos = 0;
+        }
+        return this.studentOrder[this.studentOrderPos];
+      }
+
+      nextPaginationStep() {
+        this.stepOrderPos += 1;
+        if (this.stepOrderPos >= this.stepOrder.length) {
+          this.stepOrder = shuffledIndices(PAGINATION_COUNT);
+          this.stepOrderPos = 0;
+        }
+        return this.stepOrder[this.stepOrderPos];
+      }
+
       nextSlide() {
-        this.studentIndex = (this.studentIndex + 1) % this.data.students.length;
+        this.studentIndex = this.nextStudentIndex();
         const next = this.data.students[this.studentIndex];
         const showA = this.visibleSlot !== "a";
         const nextBack = showA ? this.backA : this.backB;
@@ -517,14 +600,15 @@
         }, FRONT_DELAY_MS);
 
         this.visibleSlot = showA ? "a" : "b";
-        this.step = (this.step + 1) % PAGINATION_COUNT;
+        this.step = this.nextPaginationStep();
         this.renderPagination();
         this.cycleStart = performance.now();
+        this.currentSlideDuration = randomDuration();
         this.setProgress(0);
       }
 
       frame(now) {
-        const progress = (now - this.cycleStart) / SLIDE_MS;
+        const progress = (now - this.cycleStart) / this.currentSlideDuration;
         this.setProgress(progress);
         if (progress >= 1) {
           this.nextSlide();
@@ -533,9 +617,9 @@
     }
 
     const cards = [
-      new CardSlideshow(document.querySelector("#col-form"), cardData.form, { startStep: 0, startProgress: 0.33 }),
-      new CardSlideshow(document.querySelector("#col-mode"), cardData.mode, { startStep: 2, startProgress: 0.33 }),
-      new CardSlideshow(document.querySelector("#col-vk"), cardData.vk, { startStep: 3, startProgress: 0.66 })
+      new CardSlideshow(document.querySelector("#col-form"), cardData.form),
+      new CardSlideshow(document.querySelector("#col-mode"), cardData.mode),
+      new CardSlideshow(document.querySelector("#col-vk"), cardData.vk)
     ];
 
     function animate(now) {
