@@ -201,6 +201,15 @@
       overflow: hidden;
     }
 
+    .image-layer.back::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+      z-index: 1;
+    }
+
     #col-vk .image-layer.front {
       top: 26px;
       bottom: 77px;
@@ -340,9 +349,11 @@
       gap: 4px;
     }
 
-    .card-footer .footer-title small {
-      font-size: 30px;
-      letter-spacing: -0.02em;
+    .card-footer .footer-title sup {
+      font-size: 16px;
+      letter-spacing: 0;
+      vertical-align: super;
+      line-height: 1;
     }
 
     .card-footer .footer-plus {
@@ -367,8 +378,8 @@
       .card-footer .footer-title {
         font-size: 28px;
       }
-      .card-footer .footer-title small {
-        font-size: 22px;
+      .card-footer .footer-title sup {
+        font-size: 12px;
       }
       .card-footer .footer-plus {
         font-size: 38px;
@@ -461,7 +472,7 @@
             </div>
           </div>
           <div class="card-footer">
-            <span class="footer-title">form <small>180hp</small></span>
+            <span class="footer-title">form <sup>180hp</sup></span>
             <svg class="footer-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12h22"/><path d="M12 1v22"/></svg>
           </div>
         </div>
@@ -497,7 +508,7 @@
             </div>
           </div>
           <div class="card-footer">
-            <span class="footer-title">mode <small>180hp</small></span>
+            <span class="footer-title">mode <sup>180hp</sup></span>
             <svg class="footer-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12h22"/><path d="M12 1v22"/></svg>
           </div>
         </div>
@@ -533,7 +544,7 @@
             </div>
           </div>
           <div class="card-footer">
-            <span class="footer-title">visuell kommunikation <small>180hp</small></span>
+            <span class="footer-title">visuell kommunikation <sup>180hp</sup></span>
             <svg class="footer-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12h22"/><path d="M12 1v22"/></svg>
           </div>
         </div>
@@ -600,16 +611,16 @@
             project: "E N V Ä L D E"
           },
           {
-            name: "Anna Lastro",
-            backImage: "https://beckmans.se/wp-content/uploads/2023/05/Anna_007_bild-alvanylander-1200x1500.jpg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2023/05/Anna_002_bild-alvanylander-1200x1500.jpg",
-            project: "Office Attire Satire"
+            name: "Emily Duff",
+            backImage: "https://beckmans.se/wp-content/uploads/2023/05/Emily-D_001_bild-alvanylander_1-1200x1500.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2023/05/Emily_D_008_bild-alvanylander_1-1200x1500.jpg",
+            project: "Materialize"
           },
           {
-            name: "Karolina Pettersson",
-            backImage: "https://beckmans.se/wp-content/uploads/2023/05/karolina_pettersson_01_photo_mathias_nordgren-copy-1000x1500.webp",
-            frontImage: "https://beckmans.se/wp-content/uploads/2023/05/karolina_pettersson_05_photo_mathias_nordgren-copy-1000x1500.webp",
-            project: "Och solen har sin gång"
+            name: "Nadja Olsson",
+            backImage: "https://beckmans.se/wp-content/uploads/2025/12/VESTIGE2MB.1-1000x1500.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/12/BECKMANS_2024112588817-1057x1500.jpg",
+            project: "Vestige"
           },
           {
             name: "Sarah Niklasson",
@@ -625,7 +636,7 @@
           {
             name: "Olle Ljung",
             backImage: "https://beckmans.se/wp-content/uploads/2025/12/491418745_18385417684138754_597021362675519425_n.jpeg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2025/12/491418745_18385417684138754_597021362675519425_n.jpeg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/12/Chronically-Online-1500x1000.jpg",
             project: "What Happens In The Arctic"
           },
           {
@@ -643,7 +654,7 @@
           {
             name: "Nayra Aly",
             backImage: "https://beckmans.se/wp-content/uploads/2025/05/Nayra_Aly_Projektfoto_Nayra_Aly_2025_HR-1200x1500.jpg",
-            frontImage: "https://beckmans.se/wp-content/uploads/2025/05/Philip_Holm_Forfattarbild_Nayra_Aly_2025_HR-copy-400x400.jpg",
+            frontImage: "https://beckmans.se/wp-content/uploads/2025/05/Philip_Holm_Forfattarbild_Nayra_Aly_2025_HR-copy.jpg",
             project: "Longing for Belonging"
           },
           {
